@@ -10,6 +10,31 @@ Connectors discover their peers through out-of-band communication, or by looking
 
 Once peered, two connectors have a ledger between them; this is often a ledger with just two accounts, often administered collaboratively by the two connectors.
 
+There are two ways for connectors to peer with each other: WebFinger-based, and `ilp_secret`-based.
+
+In WebFinger-based discovery, both peers look up each other's host resource, for instance:
+
+* the server wallet1.com looks up https://wallet2.com/.well-known/webfinger?resource=https://wallet2.com
+* the server wallet2.com looks up https://wallet1.com/.well-known/webfinger?resource=https://wallet1.com
+* out of band, they agree on a currency code and a currency scale for the peering ledger
+
+This way, each peer has the other peer's public key. They now use ECDH to create a shared secret, from which a ledger prefix and an auth token are derived.
+
+In `ilp_secret`-based peering, each peer generates an `ilp_secret` URN and gives that to the other one, to achieve the same:
+
+* the server wallet1.com generates `'ilp_secret:v0.1:' + base64url('https://' + peerLedgerName1 + '@' + authToken1 + 'wallet1.com/rpc')` and gives this to wallet2.com out of band
+* the server wallet2.com generates `'ilp_secret:v0.1:' + base64url('https://' + peerLedgerName2 + '@' + authToken2 + 'wallet2.com/rpc')` and gives this to wallet1.com out of band
+* out of band, they agree on a currency code and a currency scale for the peering ledger
+
+In both cases, each peer ends up knowing:
+
+* the protocol version to use when making RPC calls to the other peer
+* the endpoint URL to use when making RPC calls to the other peer
+* the ledger prefix to use when making RPC calls to the other peer
+* the auth token to use when making RPC calls to the other peer
+* the currency code for the peering ledger
+* the currency scale for the peering ledger
+
 ## Route broadcasts
 
 Connectors send each other `broadcast_routes` messages, using the message sending functionality of the ledger between them.
