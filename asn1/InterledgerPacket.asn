@@ -1,4 +1,4 @@
-GenericPacket
+InterledgerPacket
 DEFINITIONS
 AUTOMATIC TAGS ::=
 BEGIN
@@ -8,7 +8,7 @@ IMPORTS
     VarBytes
     FROM GenericTypes
 
-    InterledgerProtocolPaymentMessage,
+    InterledgerProtocolPayment,
     InterledgerProtocolError
     FROM InterledgerProtocol
 
