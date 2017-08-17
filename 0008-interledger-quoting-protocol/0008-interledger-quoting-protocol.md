@@ -1,6 +1,6 @@
 ---
 title: The Interledger Quoting Protocol (ILQP)
-draft: 2
+draft: 3
 ---
 # Interledger Quoting Protocol (ILQP)
 
@@ -37,20 +37,20 @@ In a multiple-hop payment, there are multiple connectors, each of which creates 
 
 Quotes are sent through a request/response mechanism exposed by the ledger plugins or ledger layer.
 
-A quote request's `ilp` property must be an `IlqpLiquidityRequest`, `IlqpBySourceRequest`, or `IlqpByDestinationRequest`. The response's `ilp` property must be an `IlqpLiquidityResponse`, `IlqpBySourceResponse`, or `IlqpByDestinationResponse` respectively. If an error occurs during quoting, `ilp` will be a [`IlpError`](../0003-interledger-protocol/0003-interledger-protocol.md#ilp-error-format) instead.
+A quote request's `ilp` property must be an `IlqpLiquidityRequest`, `IlqpBySourceRequest`, or `IlqpByDestinationRequest`. The response's `ilp` property must be an `IlqpLiquidityResponse`, `IlqpBySourceResponse`, or `IlqpByDestinationResponse` respectively, wrapped in an [InterledgerPacket](https://github.com/interledger/rfcs/blob/master/asn1/InterledgerPacket.asn#L40-L45) envelope with the corresponding type. If an error occurs during quoting, `ilp` will be an [`IlpError`](https://interledger.org/rfcs/0003-interledger-protocol/draft-3.html#ilp-error-format) instead.
 
 ## ILQP Packets
 
 See [interledgerjs/ilp-packet](https://github.com/interledgerjs/ilp-packet/) for an example implementation of a packet serializer/deserializer.
 
-### IlqpLiquidityRequest
+### IlqpLiquidityRequest (envelope contents)
 
 | Field | Type | Short Description |
 |:--|:--|:--|
 | destinationAccount | Address | Address corresponding to the destination account |
 | destinationHoldDuration | UInt32 | How much time the receiver needs to fulfill the payment (in milliseconds) |
 
-### IlqpLiquidityResponse
+### IlqpLiquidityResponse (envelope contents)
 
 | Field | Type | Short Description |
 |:--|:--|:--|
@@ -63,7 +63,7 @@ See [interledgerjs/ilp-packet](https://github.com/interledgerjs/ilp-packet/) for
 
 See [interledgerjs/ilp-routing.LiquidityCurve](https://github.com/interledgerjs/ilp-routing/blob/master/src/lib/liquidity-curve.js) for an example implementation of a LiquidityCurve serializer/deserializer.
 
-### IlqpBySourceRequest
+### IlqpBySourceRequest (envelope contents)
 
 | Field | Type | Short Description |
 |:--|:--|:--|
@@ -71,14 +71,14 @@ See [interledgerjs/ilp-routing.LiquidityCurve](https://github.com/interledgerjs/
 | sourceAmount | UInt64 | Amount the sender needs to send, denominated in the asset of the source ledger |
 | destinationHoldDuration | UInt32 | How much time the receiver needs to fulfill the payment (in milliseconds) |
 
-### IlqpBySourceResponse
+### IlqpBySourceResponse (envelope contents)
 
 | Field | Type | Short Description |
 |:--|:--|:--|
 | destinationAmount | UInt64 | Amount that will arrive at the receiver |
 | sourceHoldDuration | UInt32 | How long the sender should put money on hold (in milliseconds) |
 
-### IlqpByDestinationRequest
+### IlqpByDestinationRequest (envelope contents)
 
 | Field | Type | Short Description |
 |:--|:--|:--|
@@ -86,7 +86,7 @@ See [interledgerjs/ilp-routing.LiquidityCurve](https://github.com/interledgerjs/
 | destinationAmount | UInt64 | Amount that will arrive at the receiver |
 | destinationHoldDuration | UInt32 | How much time the receiver needs to fulfill the payment (in milliseconds) |
 
-### IlqpByDestinationResponse
+### IlqpByDestinationResponse (envelope contents)
 
 | Field | Type | Short Description |
 |:--|:--|:--|

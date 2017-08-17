@@ -1,6 +1,6 @@
 ---
 title: Interledger Payment Requests (IPR)
-draft: 1
+draft: 2
 ---
 # Interledger Payment Request (IPR)
 
@@ -70,7 +70,7 @@ Here is a summary of the fields in the Interledger Payment Request format:
 | Field | Type | Short Description |
 |:--|:--|:--|
 | `version` | UInt8 | IPR Version, `2` for now |
-| `packet` | OCTET STRING | ILP Payment packet including the destination address and amount |
+| `packet` | OCTET STRING | Length-prefixed OctetString containing an InterledgerPacket of type InterledgerProtocolPayment, whose contents include the destination address and amount |
 | `condition` | UInt256 | Execution condition for the payment |
 
 #### version
@@ -83,7 +83,7 @@ IPR version. This document specifies version 2.
 
     OCTET STRING (SIZE(0..65535))
 
-The [ILP Payment Packet](../0003-interledger-protocol/0003-interledger-protocol.md#specification).
+The [ILP Payment Packet](https://interledger.org/rfcs/0003-interledger-protocol/draft-3.html#specification), in a length-prefixed OctetString.
 
 In IPR the sender only uses the `account` and `amount` from the ILP packet and MUST treat the `data` as opaque.
 

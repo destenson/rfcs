@@ -1,6 +1,6 @@
 ---
 title: The Interledger Protocol (ILP)
-draft: 3
+draft: 4
 ---
 # Interledger Protocol (ILP)
 
@@ -150,9 +150,19 @@ See below for the [ILP Error Format](#ilp-error-format) and [ILP Error Codes](#i
 
 ## Specification
 
-### ILP Payment Packet Format
+### ILP Payment Packet (InterledgerPacket envelope)
 
-Here is a summary of the fields in the ILP payment packet format:
+An [InterledgerPacket](https://github.com/interledger/rfcs/blob/master/asn1/InterledgerPacket.asn#L40-L45) always consists of an envelope and its contents. The envelope indicates:
+
+| Field | Type | Short Description |
+|:--|:--|:--|
+| type | UInt8 | Indicates whether this packet is an ILP Payment Packet (type 1), one of the ILQP requests or responses (types 2-7), an ILP error (type 8), etcetera.
+| data | OCTET STRING | The envelope contents |
+
+### ILP Payment Packet (envelope contents)
+
+Here is a summary of the fields that go inside the ILP packet envelope in case the packet type on the envelope indicates that the envelope contents forms an
+[InterledgerProtocolPayment](https://github.com/interledger/rfcs/blob/master/asn1/InterledgerProtocol.asn#L15-L26):
 
 | Field | Type | Short Description |
 |:--|:--|:--|

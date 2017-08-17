@@ -1,6 +1,6 @@
 ---
 title: The Javascript Ledger Plugin Interface
-draft: 3
+draft: 4
 ---
 # Javascript Ledger Plugin Interface
 
@@ -520,7 +520,7 @@ An integer amount, represented as a string of base-ten digits. MUST be `>= 0` an
 #### Transfer#ilp
 <code>**ilp**:String</code>
 
-An [ILP packet](../0003-interledger-protocol/), denoting the payment's final destination.
+An [ILP packet](https://interledger.org/rfcs/0003-interledger-protocol/draft-4.html#specification), denoting the payment's final destination.
 
 If the `ilp` data is too large, the ledger plugin MUST reject with a `MaximumIlpDataSizeExceededError`.
 
@@ -611,7 +611,7 @@ The ILP Prefix of the ledger being used to transfer the message.
 #### Message#ilp
 <code>**ilp**:String</code>
 
-An [ILP packet](../0003-interledger-protocol/), used for communication among ledger participants.
+An [ILP packet](https://interledger.org/rfcs/0003-interledger-protocol/draft-4.html#specification), used for communication among ledger participants.
 
 If the `ilp` data is too large, the ledger plugin MUST reject with a `MaximumIlpDataSizeExceededError`.
 
